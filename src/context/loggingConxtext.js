@@ -15,7 +15,7 @@ const LoginProvider = ({children}) =>{
     )
 }
 
-const useLoginConext = ()=>{
+const useLoginContext = ()=>{
 
     const context = useContext(login_context);
     if (!context) {
@@ -26,5 +26,5 @@ const useLoginConext = ()=>{
     }
 
     export {
-    LoginProvider, useLoginConext
+    LoginProvider, useLoginContext
     }

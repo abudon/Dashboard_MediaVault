@@ -9,6 +9,7 @@ import { useState} from "react";
 const Notifications = (props) => {
     const {userId} = props
     const [message, setMessage] = useState('');
+    const server_url = process.env.REACT_APP_SERVER_API_URL
 
 
     const onchange = (event)=>{
@@ -18,7 +19,7 @@ const Notifications = (props) => {
     const click = async ()=>{
         try{
 
-            const response = await axios.post("https://backendmediavault-production.up.railway.app/notifications", { userId: userId, message: message });
+            const response = await axios.post(`${server_url}/notifications`, { userId: userId, message: message });
                 if (response.status === 201){
                     console.log('successful')
                     alert("message sent to user successfully")

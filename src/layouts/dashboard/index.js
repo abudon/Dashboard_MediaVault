@@ -1,4 +1,5 @@
 
+///////////// IMPORTS ///////////////////
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -19,33 +20,41 @@ import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 // Soft UI Dashboard React base styles
 import typography from "assets/theme/base/typography";
 
-// Dashboard layout components
-// import BuildByDevelopers from "layouts/dashboard/components/BuildByDevelopers";
-// import WorkWithTheRockets from "layouts/dashboard/components/WorkWithTheRockets";
-// import Projects from "layouts/dashboard/components/Projects";
-// import OrderOverview from "layouts/dashboard/components/OrderOverview";
 
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
 
 // Context
-import {useLoginConext} from "../../context/loggingConxtext";
+import {useLoginContext} from "../../context/loggingConxtext";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
+///////////// VARIABLES ///////////////////
+const { size } = typography;
+
+
+
+
+
+
+
 function Dashboard() {
-  const [usersNumber, setUsersNumber] = useState(null);
-  const [bookingNumber, setBookingNumber] = useState(null)
-  const [paidUsers, setPaidUsers] = useState([]);
-  const {username} = useLoginConext()
+  ///////////// VARIABLES ///////////////////
+  const [usersNumber, setUsersNumber] = useState(0);
+  const [bookingNumber, setBookingNumber] = useState(0)
+  const [paidUsers, setPaidUsers] = useState(0);
   const navigate = useNavigate()
-  const { size } = typography;
+  const {username} = useLoginContext()
   const { chart, items } = reportsBarChartData;
-  let count = 0
+  const server_url = process.env.REACT_APP_SERVER_API_URL;
 
 
+///////////// FUNCTIONS ///////////////////
+
+  console.log(server_url)
+///////////// CALLS AND LISTENERS ///////////////////
   useEffect(() => {
 
     if (!username) {
@@ -54,12 +63,12 @@ function Dashboard() {
     }
 
     const fetchUsers = async ()=>{
+
       try {
-        const response = axios.get("https://backendmediavault-production.up.railway.app/users");
-        const number = (await response).data.users.length
+        const response = axios.get(`${server_url}/users`);
         const users = (await response).data.users
-        setPaidUsers(users)
-        setUsersNumber(number)
+        setUsersNumber(users.length)
+        setPaidUsers(users.filter(item=>item.paymentStatus === 'paid').length)
       }catch (error){
         console.error(error)
       }
@@ -68,7 +77,7 @@ function Dashboard() {
 
   const fetchBookingList = async ()=>{
     try {
-      const response = axios.get("https://backendmediavault-production.up.railway.app/booking-list");
+      const response = axios.get(`${server_url}/booking-list`);
       const number = (await response).data.bookingLists.length
       setBookingNumber(number)
     }catch (error){
@@ -77,12 +86,9 @@ function Dashboard() {
   }
   fetchBookingList()
 
-}, []);
+}, [usersNumber, bookingNumber, navigate, username, server_url]);
 
- paidUsers.map(item => {
-   if (item.paymentStatus==="paid") {
-     count = count + 1
-   } return count})
+
 
 
 
@@ -98,7 +104,7 @@ function Dashboard() {
                 title={{ text: "Booking List" }}
                 count={bookingNumber}
                 percentage={{ color: "success", text: "" }}
-                icon={{ color: "info", component: "public" }}
+                icon={{ color: "info", component: "book" }}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={4}>
@@ -106,17 +112,17 @@ function Dashboard() {
                 title={{ text: "Total Users" }}
                 count={usersNumber}
                 percentage={{ color: "secondary", text: "" }}
-                icon={{ color: "info", component: "emoji_events" }}
+                icon={{ color: "info", component: "people" }}
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={4}>
               <MiniStatisticsCard
                 title={{ text: "Successful Payment" }}
-                count={count}
+                count={paidUsers}
                 percentage={{ color: "success", text: "" }}
                 icon={{
                   color: "info",
-                  component: "shopping_cart",
+                  component: "payments",
                 }}
               />
             </Grid>
@@ -181,5 +187,5 @@ function Dashboard() {
     </DashboardLayout>
   );
 }
-
+///////////// EXPORTS ///////////////////
 export default Dashboard;

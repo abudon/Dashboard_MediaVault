@@ -31,13 +31,13 @@ const ImageData = (userId) => {
     // VARIABLES INITIALIZATION
     const [images, setImages] = useState([]);
     const [openModal, setOpenModal] = useState(false); // State to control modal visibility
-
+    const server_url = process.env.REACT_APP_SERVER_API_URL
 
 
     // DELETING IMAGES
     const handleDeleteImage = async (imageId) => {
         try {
-            await axios.delete(`https://backendmediavault-production.up.railway.app/images/${imageId}`);
+            await axios.delete(`${server_url}/images/${imageId}`);
             setImages(images.filter((image) => image.id !== imageId));
         } catch (error) {
             console.error('Error deleting image:', error);
@@ -48,7 +48,7 @@ const ImageData = (userId) => {
     useEffect(() => {
         const fetchImage = async () => {
             try {
-                const response = axios.get(`https://backendmediavault-production.up.railway.app/images/${userId}`)
+                const response = axios.get(`${server_url}/images/${userId}`)
                 const fetchedImages = (await response).data.images
                 setImages(fetchedImages)
             } catch (error) {
@@ -67,7 +67,14 @@ const ImageData = (userId) => {
         return {
             image_name: <Author name={image.image_name}  />,
             created_at: (
-                <SoftBadge variant="gradient" badgeContent={image.created_at} size="xs" container />
+                <SoftBadge variant="gradient" badgeContent={ new Date(image.created_at).toLocaleDateString('default',{
+                    year: 'numeric',
+                    month: 'short',
+                    day: "numeric",
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric'
+                })  } size="xs" container />
             ),
 
             action: (

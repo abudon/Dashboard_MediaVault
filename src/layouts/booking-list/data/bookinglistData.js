@@ -28,6 +28,7 @@ const BookingListData = () => {
 
     // VARIABLES INITIALIZATION
     const [books, setBooks] = useState([]);
+    const server_url = process.env.REACT_APP_SERVER_API_URL
 
 
 
@@ -35,10 +36,12 @@ const BookingListData = () => {
         const handleUpdateBookingStatus = async ( bookingId , bookingStatus) => {
             try {
                 // Send the updated booking status to the server
-                const response = await axios.put(`https://backendmediavault-production.up.railway.app/booking-list/${bookingId}`, {booking_status: bookingStatus});
+                const response = await axios.put(`${server_url}/booking-list/${bookingId}`, {booking_status: bookingStatus});
 
                 // Handle the success response
                 console.log('Booking status updated successfully:', response.data);
+                window.location.reload()
+
             } catch (error) {
                 // Handle errors
                 console.error('Error updating booking status:', error);
@@ -53,7 +56,7 @@ const BookingListData = () => {
     useEffect(() => {
         const fetchBooking = async () => {
             try {
-                const response = axios.get('https://backendmediavault-production.up.railway.app/booking-list')
+                const response = axios.get(`${server_url}/booking-list`)
                 const fetchedBook = (await response).data.bookingLists
                 setBooks(fetchedBook)
                 console.log(fetchedBook)
@@ -91,7 +94,15 @@ const BookingListData = () => {
                 <Author name={book.session_type} email={book.specific_requirements} />
             ),
             booking_datetime: (
-                <SoftBadge variant="gradient" badgeContent={book.booking_datetime}  size="xs" container />
+                <SoftBadge variant="gradient"
+                           badgeContent={new Date(book.booking_datetime).toLocaleDateString('default',{
+                               year: 'numeric',
+                               month: 'short',
+                               day: 'numeric',
+                               hour: 'numeric',
+                               minute: 'numeric',
+                               second: 'numeric'
+                           })}  size="xs" container />
             ),
             booking_status:(
                 <SoftBadge

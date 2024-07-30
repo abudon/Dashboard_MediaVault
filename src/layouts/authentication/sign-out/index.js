@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {useLoginConext} from "../../../context/loggingConxtext";
+import {useLoginContext} from "../../../context/loggingConxtext";
 
 const SignOut = () => {
     const navigate = useNavigate();
-    const {setUsername} = useLoginConext()
+    const {setUsername} = useLoginContext()
 
     useEffect(() => {
         // Clear localStorage

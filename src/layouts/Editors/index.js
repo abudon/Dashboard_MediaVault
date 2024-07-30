@@ -30,13 +30,14 @@ const EditUserPage = () => {
     const {columns, rows}= ImageData(user_id)
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
+    const server_url = process.env.REACT_APP_SERVER_API_URL
 
 
     // GET DATA FROM DATABASE USING THE ID
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.post('https://backendmediavault-production.up.railway.app/getuser', { user_id });
+                const response = await axios.post(`${server_url}/getuser`, { user_id });
                 const userData = response.data;
                 setUserData(userData);
             } catch (error) {
@@ -51,7 +52,7 @@ const EditUserPage = () => {
     const handleFormSubmit = async (updatedUserData) => {
         try {
             // Send updatedUserData to the server to update user data
-          const response = await axios.put(`https://backendmediavault-production.up.railway.app/users/${user_id}`, updatedUserData, {
+          const response = await axios.put(`${server_url}/users/${user_id}`, updatedUserData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -66,11 +67,12 @@ const EditUserPage = () => {
             console.error('Error updating user data:', error);
 
         }
+        window.location.reload()
     };
 
     const handleDeleteUser = async () => {
         try {
-            const response = await axios.delete(`https://backendmediavault-production.up.railway.app/users/${user_id}`);
+            const response = await axios.delete(`${server_url}/users/${user_id}`);
             if (response.status === 200){
                 setAlertDelete(true)
                 navigate("/user")
@@ -78,6 +80,7 @@ const EditUserPage = () => {
             } else {
                 setAlertDelete(false)
             }
+            window.location.reload()
 
         } catch (error) {
             console.error('Error updating user data:', error);

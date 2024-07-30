@@ -21,14 +21,14 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 import curved9 from "assets/images/vr-bg.jpg";
 
 // Context
-import {useLoginConext} from "../../../context/loggingConxtext";
+import {useLoginContext} from "../../../context/loggingConxtext";
 import axios from "axios";
 import {Alert} from "@mui/material";
 
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
 
-  const { username, setUsername} = useLoginConext()
+  const { username, setUsername} = useLoginContext()
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const navigate = useNavigate()
@@ -55,7 +55,7 @@ function SignIn() {
   const fetchUser = async (email, password) => {
     try {
       // Send a POST request to the backend endpoint with the provided email and password
-      const response = await axios.post('https://backendmediavault-production.up.railway.app/signin', { email, password });
+      const response = await axios.post('http://localhost:3000/signin', { email, password });
 
       // Check if the request was successful (status code 200)
       if (response.status === 200) {

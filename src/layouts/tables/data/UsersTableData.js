@@ -2,10 +2,10 @@
 // Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
-//import SoftAvatar from "components/SoftAvatar";
 import SoftBadge from "components/SoftBadge";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import SoftButton from "../../../components/SoftButton";
 
 
 
@@ -38,7 +38,7 @@ const UsersData = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = axios.get('https://backendmediavault-production.up.railway.app/users')
+        const response = axios.get(`${process.env.REACT_APP_SERVER_API_URL}/users`)
         const fetchedUsers = (await response).data.users
         setUsers(fetchedUsers)
       } catch (error) {
@@ -48,7 +48,7 @@ const UsersData = () => {
     }
       fetchUsers();
 
-  }, []);
+  }, [users]);
 
   // Update rows with fetched users
 
@@ -64,21 +64,19 @@ const UsersData = () => {
         </SoftTypography>
     ),
     action: (
-        <SoftTypography
-            component="a"
+        <SoftButton
+            size={'small'}
+            color={'secondary'}
+            variant={'gradient'}
             href={`/users/edit/${user.id}`}
-            variant="caption"
-            color="secondary"
-            fontWeight="medium"
         >
           Edit
-        </SoftTypography>
+        </SoftButton>
     )
   }
   })
  const columns = [
    { name: "username", align: "center" },
-   // { name: "function", align: "left" },
    { name: "payment_status", align: "center" },
    { name: "role", align: "center" },
    { name: "action", align: "center" },

@@ -32,12 +32,13 @@ const GalleryData = () => {
     const [gallery, setGallery] = useState([]);
     const {num, setGalleryNum, galleryNum} = useGallery()
     const [open, setOpen] = useState(false);
+    const server_url = process.env.REACT_APP_SERVER_API_URL
 
 
     // DELETING FILES FROM GALLERY
     const handleDeleteFileFromGallery = async (imageId) => {
         try {
-            const response = await axios.delete(`https://backendmediavault-production.up.railway.app/gallery/${imageId}`);
+            const response = await axios.delete(`${server_url}/gallery/${imageId}`);
             if (response.status === 200) {
                 setGallery(gallery.filter((image) => image.id !== imageId));
             }
@@ -50,7 +51,7 @@ const GalleryData = () => {
     useEffect(() => {
         const fetchGallery = async () => {
             try {
-                const response = axios.get(`https://backendmediavault-production.up.railway.app/gallery`)
+                const response = axios.get(`${server_url}/gallery`)
                 const fetchedImages = (await response).data.galleryItems
                 setGallery(fetchedImages)
 
