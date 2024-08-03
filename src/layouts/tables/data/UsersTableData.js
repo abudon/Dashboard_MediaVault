@@ -48,7 +48,7 @@ const UsersData = () => {
     }
       fetchUsers();
 
-  }, [users]);
+  }, []);
 
   // Update rows with fetched users
 

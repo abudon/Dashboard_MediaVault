@@ -32,6 +32,7 @@ const GalleryData = () => {
     const [gallery, setGallery] = useState([]);
     const {num, setGalleryNum, galleryNum} = useGallery()
     const [open, setOpen] = useState(false);
+    const [imageData, setImageData] = useState({});
     const server_url = process.env.REACT_APP_SERVER_API_URL
 
 
@@ -67,7 +68,6 @@ const GalleryData = () => {
     }, []);
 
     useEffect(() => {
-        console.log(gallery.length)
         setGalleryNum(gallery.length)
     }, [gallery]);
 
@@ -75,11 +75,18 @@ const GalleryData = () => {
 
 
 
-    const rows = gallery.slice(0, num).reverse().map((image) => {
+    const rows = (gallery.slice(0, num).reverse()).map((image) => {
         return {
             gallery_name: <Author name={image.image_name}  />,
             created_at: (
-                <SoftBadge variant="gradient" badgeContent={image.created_at} size="xs" container />
+                <SoftBadge variant="gradient" badgeContent={new Date(image.created_at).toLocaleDateString('default',{
+                    year: "numeric",
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: '2-digit'
+                })} size="xs" container />
             ),
 
             action: (
@@ -89,11 +96,23 @@ const GalleryData = () => {
                         color="error"
                         size={'small'}
                         fontWeight="medium"
-                        onClick={() =>setOpen(true)}
+                        onClick={() =>{
+                            setImageData({name: image.image_name,
+                            id: image.id})
+                            setOpen(true)
+                        }
+                    }
                     >
                         Remove
                     </SoftButton>
-                    <SoftModal open={open} setOpen={setOpen} message={image.image_name} handleDelete={()=>handleDeleteFileFromGallery(image.id)}></SoftModal>
+                     <SoftModal open={open} setOpen={setOpen}
+                                              message={imageData.name}
+                                              handleDelete={()=>
+                                                  handleDeleteFileFromGallery(imageData.id)}>
+
+                        </SoftModal>
+
+
                 </>
 
             )

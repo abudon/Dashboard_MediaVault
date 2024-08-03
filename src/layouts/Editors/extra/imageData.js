@@ -1,6 +1,5 @@
  import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
-//import SoftAvatar from "components/SoftAvatar";
 import SoftBadge from "components/SoftBadge";
 import {useEffect, useState} from "react";
 import axios from "axios";
@@ -30,6 +29,7 @@ const ImageData = (userId) => {
 
     // VARIABLES INITIALIZATION
     const [images, setImages] = useState([]);
+    const [fileExtra, setFileExtra] = useState({});
     const [openModal, setOpenModal] = useState(false); // State to control modal visibility
     const server_url = process.env.REACT_APP_SERVER_API_URL
 
@@ -63,7 +63,7 @@ const ImageData = (userId) => {
 
     // Update rows with fetched users
 
-    const rows = images.map((image) => {
+    const rows = (images.reverse()).map((image) => {
         return {
             image_name: <Author name={image.image_name}  />,
             created_at: (
@@ -79,22 +79,28 @@ const ImageData = (userId) => {
 
             action: (
                 <>
+                    <SoftModal
+                        open={openModal}
+                        setOpen={setOpenModal}
+                        message={`file ${fileExtra.name}`}
+                        handleDelete={() => handleDeleteImage(fileExtra.id)}
+                    />
                 <SoftButton
                     component="a"
                     color="error"
                     size={'small'}
                     fontWeight="medium"
-                    onClick={() => setOpenModal(true)}
+                    onClick={() =>{
+                        setFileExtra({
+                            id: image.id,
+                            name: image.image_name
+                        })
+                        setOpenModal(true)
+                    }
+                }
                 >
                     Remove
                 </SoftButton>
-                    <SoftModal
-                        open={openModal}
-                        setOpen={setOpenModal}
-                        message={`image ${image.image_name}`} // Pass the appropriate message
-                        handleDelete={() => handleDeleteImage(image.id)} // Pass the appropriate delete function
-                    />
-
                 </>
             )
         }

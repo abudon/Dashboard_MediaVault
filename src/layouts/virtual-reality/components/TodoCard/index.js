@@ -69,6 +69,7 @@ function TodoCard() {
 
         }catch (e) {
           console.error("Can not Transcode",e)
+          alert("Error in Network Connection, Please Try Again")
         }
 
 
