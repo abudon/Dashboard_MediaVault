@@ -53,7 +53,6 @@ function Dashboard() {
 
 ///////////// FUNCTIONS ///////////////////
 
-  console.log(server_url)
 ///////////// CALLS AND LISTENERS ///////////////////
   useEffect(() => {
 

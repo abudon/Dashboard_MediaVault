@@ -40,7 +40,7 @@ function SignUp() {
   const [password, setPassword] = useState(null);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
-
+  const server_url = process.env.REACT_APP_SERVER_API_URL;
   const style = {
     position: 'absolute',
     top: '50%',
@@ -86,7 +86,7 @@ function SignUp() {
     }
 
 
-    axios.post("https://backendmediavault-production.up.railway.app/signup",newData).then((response) => {
+    axios.post(`${server_url}/signup`,newData).then((response) => {
 
     if (response.data.user){
 

@@ -39,7 +39,6 @@ function SignIn() {
     console.log('Username updated:', username);
   }, [username]); // useEffect will trigger whenever username changes
 
-
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const handleonChange = (event)=>{
     switch (event.target.type) {
@@ -53,9 +52,10 @@ function SignIn() {
   }
 
   const fetchUser = async (email, password) => {
+
     try {
       // Send a POST request to the backend endpoint with the provided email and password
-      const response = await axios.post('http://localhost:3000/signin', { email, password });
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_API_URL}/signin`, { email, password });
 
       // Check if the request was successful (status code 200)
       if (response.status === 200) {
@@ -77,7 +77,6 @@ function SignIn() {
 
     // Fetch the user using the provided email and password
     const user = await fetchUser(email, password);
-
 
 
     if (user && user.role === "admin") {
