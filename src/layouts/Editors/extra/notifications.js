@@ -14,6 +14,7 @@ const Notifications = (props) => {
 
     const onchange = (event)=>{
         setMessage(event.target.value)
+        console.log(message)
     }
 
     const click = async ()=>{

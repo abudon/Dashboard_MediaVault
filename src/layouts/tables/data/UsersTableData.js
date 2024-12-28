@@ -6,11 +6,12 @@ import SoftBadge from "components/SoftBadge";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import SoftButton from "../../../components/SoftButton";
-
+import {useSearch} from "../../../context/useSearchQuery";
 
 
 // COMPONENT AND FUNCTIONS
 function Author({ name, email }) {
+
     return (
         <SoftBox display="flex" alignItems="center" px={1} py={0.5}>
             <SoftBox display="flex" flexDirection="column">
@@ -30,16 +31,27 @@ const UsersData = () => {
 
   // VARIABLES INITIALIZATION
   const [users, setUsers] = useState([]);
+  const {searchQuery} = useSearch()
 
 
-
+    console.log(searchQuery)
 
   // GETTING DATA FROM THE SERVERS
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = axios.get(`${process.env.REACT_APP_SERVER_API_URL}/users`)
-        const fetchedUsers = (await response).data.users
+        let fetchedUsers = (await response).data
+          // let filter fetchUsers with the search query context
+          if (searchQuery) {
+              fetchedUsers = fetchedUsers.filter(user =>
+                  user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                  user.role.toLowerCase().includes(searchQuery.toLowerCase())
+              );
+              setUsers(fetchedUsers)
+          }
+
         setUsers(fetchedUsers)
       } catch (error) {
         console.error('Error Fetching Users')
@@ -48,7 +60,7 @@ const UsersData = () => {
     }
       fetchUsers();
 
-  }, []);
+  }, [searchQuery]);
 
   // Update rows with fetched users
 

@@ -14,6 +14,8 @@ function Footer({ company, links }) {
   const { href, name } = company;
   const { size } = typography;
 
+    console.log(href,name)
+
   const renderLinks = () =>
     links.map((link) => (
       <SoftBox key={link.name} component="li" px={2} lineHeight={1}>

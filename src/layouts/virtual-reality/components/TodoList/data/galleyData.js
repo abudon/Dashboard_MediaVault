@@ -6,7 +6,7 @@ import axios from "axios";
 import SoftButton from "../../../../../components/SoftButton";
 import {useGallery} from "../../../../../context/useGallery";
 import SoftModal from "../../../../../components/SoftModal";
-
+import {useSearch} from "../../../../../context/useSearchQuery";
 
 
 // COMPONENT AND FUNCTIONS
@@ -34,6 +34,7 @@ const GalleryData = () => {
     const [open, setOpen] = useState(false);
     const [imageData, setImageData] = useState({});
     const server_url = process.env.REACT_APP_SERVER_API_URL
+    const {searchQuery} = useSearch();
 
 
     // DELETING FILES FROM GALLERY
@@ -53,7 +54,12 @@ const GalleryData = () => {
         const fetchGallery = async () => {
             try {
                 const response = axios.get(`${server_url}/gallery`)
-                const fetchedImages = (await response).data.galleryItems
+                console.log(response)
+                let fetchedImages = (await response).data.gallery;
+                if (searchQuery){
+                    fetchedImages = fetchedImages.filter((image) => image.image_name.toLowerCase().includes(searchQuery.toLowerCase()))
+                    setGallery(fetchedImages)
+                }
                 setGallery(fetchedImages)
 
 
@@ -65,7 +71,7 @@ const GalleryData = () => {
 
         fetchGallery();
 
-    }, []);
+    }, [searchQuery]);
 
     useEffect(() => {
         setGalleryNum(gallery.length)

@@ -44,7 +44,7 @@ import {
 import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 import {useLoginContext} from "../../../context/loggingConxtext";
-
+import {useSearch} from "../../../context/useSearchQuery";
 
 
 function DashboardNavbar({ absolute, light, isMini }) {
@@ -54,6 +54,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
   const {username} = useLoginContext()
+  const {searchQuery,setSearchQuery} = useSearch();
+
 
   useEffect(() => {
     // Setting the navbar type
@@ -86,6 +88,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 
+
   // Render the notifications menu
   const renderMenu = () => (
     <Menu
@@ -99,18 +102,18 @@ function DashboardNavbar({ absolute, light, isMini }) {
       onClose={handleCloseMenu}
       sx={{ mt: 2 }}
     >
-      <NotificationItem
-        image={<img src={team2} alt="person" />}
-        title={["New message", "from Laur"]}
-        date="13 minutes ago"
-        onClick={handleCloseMenu}
-      />
-      <NotificationItem
-        image={<img src={logoSpotify} alt="person" />}
-        title={["New album", "by Travis Scott"]}
-        date="1 day"
-        onClick={handleCloseMenu}
-      />
+      {/*<NotificationItem*/}
+      {/*  image={<img src={team2} alt="person" />}*/}
+      {/*  title={["New message", "from Laur"]}*/}
+      {/*  date="13 minutes ago"*/}
+      {/*  onClick={handleCloseMenu}*/}
+      {/*/>*/}
+      {/*<NotificationItem*/}
+      {/*  image={<img src={logoSpotify} alt="person" />}*/}
+      {/*  title={["New album", "by Travis Scott"]}*/}
+      {/*  date="1 day"*/}
+      {/*  onClick={handleCloseMenu}*/}
+      {/*/>*/}
       <NotificationItem
         color="secondary"
         image={
@@ -141,6 +144,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
               <SoftInput
                 placeholder="Type here..."
                 icon={{ component: "search", direction: "left" }}
+                value = {searchQuery}
+                onChange={(event)=>setSearchQuery(event.target.value)}
               />
             </SoftBox>
             <SoftBox color={light ? "white" : "inherit"}>

@@ -65,7 +65,7 @@ function Dashboard() {
 
       try {
         const response = axios.get(`${server_url}/users`);
-        const users = (await response).data.users
+        const users = (await response).data
         setUsersNumber(users.length)
         setPaidUsers(users.filter(item=>item.paymentStatus === 'paid').length)
       }catch (error){
@@ -77,7 +77,8 @@ function Dashboard() {
   const fetchBookingList = async ()=>{
     try {
       const response = axios.get(`${server_url}/booking-list`);
-      const number = (await response).data.bookingLists.length
+      console.log(response)
+      const number = (await response).data.bookings.length
       setBookingNumber(number)
     }catch (error){
       console.error(error)

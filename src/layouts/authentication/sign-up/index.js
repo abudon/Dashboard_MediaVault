@@ -28,6 +28,9 @@ import curved6 from "assets/images/curved-images/curved0.jpg";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 
 
 
@@ -40,6 +43,7 @@ function SignUp() {
   const [password, setPassword] = useState(null);
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState([]);
   const server_url = process.env.REACT_APP_SERVER_API_URL;
   const style = {
     position: 'absolute',
@@ -74,6 +78,12 @@ function SignUp() {
     }
 
   }
+
+  const clear_inputs = (event)=>{
+   event.target.username = '';
+   event.target.email = '';
+   event.target.password = '';
+  }
   const handleFormSubmit= ()=>{
 
 
@@ -84,9 +94,11 @@ function SignUp() {
       password: password,
       role: role
     }
+    setErrors([]);
 
 
-    axios.post(`${server_url}/signup`,newData).then((response) => {
+    axios.post(`${server_url}/signup`,newData).
+    then((response) => {
 
     if (response.data.user){
 
@@ -102,11 +114,14 @@ function SignUp() {
 
   })
       .catch((error) => {
-        setMessage("Error in Network Communicationn")
-        // Optionally, you can redirect the user to another page or show a success message
-        handleOpen()
-        console.error('Error creating user:', error);
-        // Handle the error (e.g., display an error message to the user)
+        if (error.response && error.response.status === 400) {
+          // Set validation errors from the backend
+          setErrors(error.response.data.errors);
+        } else {
+          console.error('An unexpected error occurred:', error);
+          setMessage("An unexpected error occurred. Please try again later.")
+          handleOpen()
+        }
       })
 
   }
@@ -131,13 +146,13 @@ function SignUp() {
         <SoftBox pt={2} pb={3} px={3}>
           <SoftBox component="form" role="form">
             <SoftBox mb={2}>
-              <SoftInput type="text"  placeholder="Username"  onChange={handleOnChange} />
+              <SoftInput name={'username'} type="text"  placeholder="Username"  onChange={handleOnChange} />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput  type="email" placeholder="Email" onChange={handleOnChange} />
+              <SoftInput name={'email'}  type="email" placeholder="Email" onChange={handleOnChange} />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput  type="password" placeholder="Password"  onChange={handleOnChange}/>
+              <SoftInput name={'password'}  type="password" placeholder="Password"  onChange={handleOnChange}/>
             </SoftBox>
             <SoftBox mb={2}>
               <Select
@@ -178,6 +193,53 @@ function SignUp() {
                           variant="gradient" color="dark" fullWidth>
                 sign up
               </SoftButton>
+              {
+                errors.length > 0 &&
+                  (
+                    <SoftBox
+                      borderRadius={'1rem'}
+                      bgColor={'grey'}
+                      opacity={1}
+                      height={'auto'}
+                      width={'100%'}
+                      my={4}
+                      px={3}
+                      py={0.7}
+                  >
+                <SoftTypography
+                    color={'error'}
+                    fontWeight={'bold'}
+                    fontSize={12}
+                >Error:</SoftTypography>
+                      <ul>
+                        {
+                          errors.map((error, index) => (
+                             <li
+                                  style={{
+                                    mt: 1,
+                                    fontSize: '0.8rem',
+                                    color: 'black',
+                                    fontWeight: 'bold',
+                                    lineHeight: '1.5',
+                                    listStyleType: 'disc',
+                                    marginLeft: '1rem',
+                                    // hover
+                                    cursor: 'pointer',
+                                    transition: 'color 0.3s ease',
+                                    "&:hover": {
+                                      color: 'red',
+                                    }
+                                  }}
+                                 key={index}>
+                               {error}
+                             </li>
+
+                          ))
+                        }
+                      </ul>
+                  </SoftBox>
+              )
+              }
               <Modal
                   open={open}
                   onClose={handleClose}

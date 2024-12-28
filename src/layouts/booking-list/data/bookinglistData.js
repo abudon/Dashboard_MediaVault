@@ -4,7 +4,7 @@ import SoftBadge from "components/SoftBadge";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import SoftButton from "../../../components/SoftButton";
-
+import {useSearch} from "../../../context/useSearchQuery";
 
 
 // COMPONENT AND FUNCTIONS
@@ -29,6 +29,8 @@ const BookingListData = () => {
     // VARIABLES INITIALIZATION
     const [books, setBooks] = useState([]);
     const server_url = process.env.REACT_APP_SERVER_API_URL
+    const context = useSearch();
+    const {searchQuery} = context;
 
 
 
@@ -57,8 +59,17 @@ const BookingListData = () => {
         const fetchBooking = async () => {
             try {
                 const response = axios.get(`${server_url}/booking-list`)
-                const fetchedBook = (await response).data.bookingLists
+                let fetchedBook = (await response).data.bookings;
+                if (searchQuery){
+                    fetchedBook = fetchedBook.filter(item=>item.customer_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        item.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        item.phone_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        item.session_type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                        item.specific_requirements.toLowerCase().includes(searchQuery.toLowerCase()))
+                    setBooks(fetchedBook)
+                }
                 setBooks(fetchedBook)
+
                 console.log(fetchedBook)
             } catch (error) {
                 console.error('Error Fetching Users')
@@ -67,7 +78,7 @@ const BookingListData = () => {
         }
         fetchBooking();
 
-    }, []);
+    }, [searchQuery]);
 
     const determineColor = (status) => {
         switch (status) {

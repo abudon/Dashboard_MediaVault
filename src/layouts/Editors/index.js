@@ -75,7 +75,7 @@ const EditUserPage = () => {
             const response = await axios.delete(`${server_url}/users/${user_id}`);
             if (response.status === 200){
                 setAlertDelete(true)
-                navigate("/user")
+                navigate("/users")
 
             } else {
                 setAlertDelete(false)

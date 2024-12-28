@@ -33,6 +33,7 @@ function SignIn() {
   const [password, setPassword] = useState(null);
   const navigate = useNavigate()
   const [alert, setAlert] = useState(null);
+  const [icon, setIcon] = useState(true);
 
 
   useEffect(() => {
@@ -60,7 +61,7 @@ function SignIn() {
       // Check if the request was successful (status code 200)
       if (response.status === 200) {
         // Return the user data from the response
-        return response.data.user;
+        return response.data;
       } else {
         // If the request was not successful, log an error and return null
         console.error('Failed to fetch user:', response.statusText);
@@ -129,13 +130,17 @@ function SignIn() {
           </SoftBox>
           <SoftInput onChange={handleonChange} type="email" placeholder="Email" />
         </SoftBox>
-        <SoftBox mb={2}>
+        <SoftBox  mb={2}>
           <SoftBox mb={1} ml={0.5}>
             <SoftTypography component="label" variant="caption" fontWeight="bold">
               Password
             </SoftTypography>
           </SoftBox>
-          <SoftInput onChange={handleonChange} type="password" placeholder="Password" />
+          <SoftInput onClick={()=>setIcon(prevState => !prevState)} icon={{
+            component : icon? "key":"password",
+            direction: 'right',
+
+          }} onChange={handleonChange} type={!icon?"password":"text"} placeholder="Password"/>
         </SoftBox>
         <SoftBox display="flex" alignItems="center">
           <Switch checked={rememberMe} onChange={handleSetRememberMe} />

@@ -16,10 +16,8 @@ import Table from "examples/Tables/Table";
 import UsersData from "./data/UsersTableData";
 
 
-
 function Tables() {
   const { columns, rows } = UsersData();
-
 
 
   return (
@@ -29,7 +27,7 @@ function Tables() {
         <SoftBox mb={3}>
           <Card>
             <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-              <SoftTypography variant="h6">Client table</SoftTypography>
+              <SoftTypography variant="h6">User's Table</SoftTypography>
             </SoftBox>
             <SoftBox
               sx={{
