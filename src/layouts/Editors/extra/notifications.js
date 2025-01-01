@@ -47,7 +47,7 @@ const Notifications = (props) => {
                     justifyContent: "center"
                 }}>
                     <SoftTextarea sx={{marginRight: "10px"}} value={message} onChange={onchange}></SoftTextarea>
-                    <SoftButton sx={{marginLeft: "10px"}} variant={"gradient"} onClick={click}>Send Message</SoftButton>
+                    <SoftButton color={'info'} sx={{marginLeft: "10px"}} variant={"gradient"} onClick={click}>Send Message</SoftButton>
                 </SoftBox>
 
 

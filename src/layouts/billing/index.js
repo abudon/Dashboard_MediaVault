@@ -18,8 +18,14 @@ import Footer from "examples/Footer";
 // Billing page components
 import PaymentMethod from "layouts/billing/components/PaymentMethod";
 
+import {useData} from "../../context/useData";
+import {usePhotoLabContext} from "../../context";
+
 
 function Billing() {
+  const {company, links} = useData();
+  const {state} = usePhotoLabContext();
+  const {sidenavColor} = state;
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -37,6 +43,7 @@ function Billing() {
                     title="salary"
                     description="Belong Interactive"
                     value="+$2000"
+                    color={sidenavColor}
                   />
                 </Grid>
                 <Grid item xs={12} md={6} xl={3}>
@@ -45,6 +52,7 @@ function Billing() {
                     title="paypal"
                     description="Freelance Payment"
                     value="$455.00"
+                    color={sidenavColor}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -52,23 +60,19 @@ function Billing() {
                 </Grid>
               </Grid>
             </Grid>
-            {/*<Grid item xs={12} lg={4}>*/}
-            {/*  <Invoices />*/}
-            {/*</Grid>*/}
+
           </Grid>
         </SoftBox>
         <SoftBox my={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={7}>
-              {/*<BillingInformation />*/}
             </Grid>
             <Grid item xs={12} md={5}>
-              {/*<Transactions />*/}
             </Grid>
           </Grid>
         </SoftBox>
       </SoftBox>
-      <Footer />
+      <Footer company={company} links={links} />
     </DashboardLayout>
   );
 }

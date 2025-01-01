@@ -33,7 +33,7 @@ import { usePhotoLabContext, setMiniSidenav } from "context";
 
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
-  const [state, dispatch] = usePhotoLabContext();
+  const {state, dispatch} = usePhotoLabContext();
   const { miniSidenav, transparentSidenav } = state;
   const location = useLocation();
   const { pathname } = location;

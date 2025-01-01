@@ -40,16 +40,13 @@ import {
   setOpenConfigurator,
 } from "context";
 
-// Images
-import team2 from "assets/images/team-2.jpg";
-import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 import {useLoginContext} from "../../../context/loggingConxtext";
 import {useSearch} from "../../../context/useSearchQuery";
 
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
-  const [state, dispatch] = usePhotoLabContext();
+  const {state, dispatch} = usePhotoLabContext();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = state;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);

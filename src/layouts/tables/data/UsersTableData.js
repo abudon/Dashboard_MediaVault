@@ -18,7 +18,7 @@ function Author({ name, email }) {
                 <SoftTypography variant="button" fontWeight="medium">
                     {name}
                 </SoftTypography>
-                <SoftTypography variant="caption" color="secondary">
+                <SoftTypography variant="caption" color="dark">
                     {email}
                 </SoftTypography>
             </SoftBox>
@@ -34,7 +34,6 @@ const UsersData = () => {
   const {searchQuery} = useSearch()
 
 
-    console.log(searchQuery)
 
   // GETTING DATA FROM THE SERVERS
   useEffect(() => {
@@ -66,7 +65,7 @@ const UsersData = () => {
 
   const rows = users.map((user) => {
   return {
-    username: <Author name={user.username} email={user.email} />,
+    username: <Author name={user.username} email={(user.email)} />,
     payment_status: (
         <SoftBadge variant="gradient" badgeContent={user.paymentStatus} color={user.paymentStatus === 'pending' ? "danger": "success"} size="xs" container />
     ),

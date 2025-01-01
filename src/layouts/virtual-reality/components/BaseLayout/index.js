@@ -32,12 +32,14 @@ import {
 
 // Images
 import brand from "assets/images/logo-ct.png";
+import {useData} from "../../../../context/useData";
 
 function BaseLayout({ children }) {
-  const [state, dispatch] = usePhotoLabContext();
+  const {state, dispatch} = usePhotoLabContext();
   const { miniSidenav, sidenavColor } = state;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
+  const {company, links} = useData();
 
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
@@ -59,7 +61,7 @@ function BaseLayout({ children }) {
   useEffect(() => {
     setLayout(dispatch, "vr");
     setTransparentSidenav(dispatch, false);
-  }, [pathname]);
+  }, [pathname, dispatch]);
 
   return (
     <SoftBox sx={baseLayout}>
@@ -91,7 +93,7 @@ function BaseLayout({ children }) {
         </SoftBox>
       </SoftBox>
       <SoftBox pb={2} pt={0.25}>
-        <Footer />
+        <Footer company={company} links={links}/>
       </SoftBox>
     </SoftBox>
   );

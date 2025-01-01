@@ -75,7 +75,7 @@ const GalleryData = () => {
 
     useEffect(() => {
         setGalleryNum(gallery.length)
-    }, [gallery, setGallery]);
+    }, [gallery, setGallery, setGalleryNum]);
 
     // Update rows with fetched users
 

@@ -46,7 +46,7 @@ const EditUserPage = () => {
         };
 
         fetchUser();
-    }, [user_id]);
+    }, [user_id, server_url]);
 
 
     const handleFormSubmit = async (updatedUserData) => {
@@ -161,26 +161,37 @@ const EditUserPage = () => {
                                 }} >
                                     <SoftBox mb={2} mx={1} shadow={'enable'} width={"50%"}>
                                         <SoftTypography fontSize={'small'} textAlign={'left'} variiant={'h6'} fontWeight={'bold'}>username:</SoftTypography>
-                                        <SoftInput type="text" value={userData.username || ''} label={"email"} onChange={(e) => setUserData({ ...userData, name: e.target.value })} />
+                                        <SoftInput icon={{component:"person",direction:'right'}} type="text" value={userData.username || ''} label={"email"} onChange={(e) => setUserData({ ...userData, name: e.target.value })} />
                                     </SoftBox>
                                 <SoftBox mb={2} mx={1} shadow={'enable'} width={"50%"}>
                                     <SoftTypography fontSize={'small'} textAlign={'left'} variiant={'h6'} fontWeight={'bold'}>email:</SoftTypography>
-                                    <SoftInput type="text" value={userData.email || ''} label={"email"} onChange={(e) => setUserData({ ...userData, name: e.target.value })} />
+                                    <SoftInput icon={{component:"email",direction:'right'}}  type="text" value={userData.email || ''} label={"email"} onChange={(e) => setUserData({ ...userData, name: e.target.value })} />
                                 </SoftBox>
-                                <SoftBox mb={2} mx={1} width={"50%"}>
-                                    <SoftTypography fontSize={'small'} textAlign={'left'} variiant={'h6'} fontWeight={'bold'}>password:</SoftTypography>
-                                    <SoftInput type="text" value={userData.password || ''}  onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
+
                                 </SoftBox>
-                                <SoftBox mb={2} mx={1} width={"50%"}>
-                                    <SoftTypography fontSize={'small'} textAlign={'left'} variiant={'h6'} fontWeight={'bold'}>payment status:</SoftTypography>
-                                    <Select value={userData.paymentStatus || ''} onChange={(e) => setUserData({ ...userData, paymentStatus: e.target.value })}>
-                                        <MenuItem value={"paid"}>Paid</MenuItem>
-                                        <MenuItem value={"pending"}>Pending</MenuItem>
-                                    </Select>
+                                <SoftBox  sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center"
+                                }} >
+                                    <SoftBox mb={2} mx={1} width={"50%"}>
+                                        <SoftTypography fontSize={'small'} textAlign={'left'} variiant={'h6'} fontWeight={'bold'}>password:</SoftTypography>
+                                        <SoftInput icon={{component:"password",direction:'right'}} type="text" value={userData.password || ''}  onChange={(e) => setUserData({ ...userData, password: e.target.value })} />
+                                    </SoftBox>
+                                    <SoftBox mb={2} mx={1} width={"50%"}>
+                                        <SoftTypography fontSize={'small'} textAlign={'left'} variiant={'h6'} fontWeight={'bold'}>payment status:</SoftTypography>
+                                        <Select value={userData.paymentStatus || ''} onChange={(e) => setUserData({ ...userData, paymentStatus: e.target.value })}>
+                                            <MenuItem value={"paid"}>Paid</MenuItem>
+                                            <MenuItem value={"pending"}>Pending</MenuItem>
+                                        </Select>
+                                    </SoftBox>
+
                                 </SoftBox>
-                                </SoftBox>
+
+
+
                                 <SoftBox mb={0} mx={1} width={"100%"}>
-                                    <SoftButton size={'small'} color={"success"} sx={{marginRight:3}} onClick={() => {
+                                    <SoftButton  size={'small'} color={"success"} sx={{marginRight:3}} onClick={() => {
                                         handleFormSubmit(userData)}
                                     } >Save Changes</SoftButton>
                                     <SoftButton size={'small'} color={"error"} sx={{marginLeft:3}} onClick={()=>{

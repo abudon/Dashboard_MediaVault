@@ -15,7 +15,7 @@ import SoftBox from "components/SoftBox";
 import {usePhotoLabContext, setLayout } from "context";
 
 function PageLayout({ background, children }) {
-  const [, dispatch] = usePhotoLabContext();
+  const { dispatch } = usePhotoLabContext();
   const { pathname } = useLocation();
 
   useEffect(() => {

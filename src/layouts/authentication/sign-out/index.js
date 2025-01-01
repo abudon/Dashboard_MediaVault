@@ -13,7 +13,7 @@ const SignOut = () => {
 
         // Redirect the user to sign-in page
         navigate('/authentication/sign-in');
-    }, [navigate]);
+    }, [navigate, setUsername]);
 
     return null; // Since this component doesn't render any HTML view, return null
 };

@@ -26,7 +26,7 @@ import {
 } from "context";
 
 function Configurator() {
-  const [state, dispatch] = usePhotoLabContext();
+  const {state, dispatch} = usePhotoLabContext();
   const { openConfigurator, transparentSidenav, fixedNavbar, sidenavColor } = state;
   const [disabled, setDisabled] = useState(false);
   const sidenavColors = ["primary", "dark", "info", "success", "warning", "error"];

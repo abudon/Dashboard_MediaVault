@@ -52,9 +52,16 @@ const PhotoLabContextProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const value = useMemo(() => [state, dispatch], [state, dispatch]);
+  const value = useMemo(() => (
+      {
+        state,
+        dispatch
+      }
+  ), [state, dispatch]);
 
-  return <photo_lab_context.Provider value={value}>{children}</photo_lab_context.Provider>;
+  return <photo_lab_context.Provider value={value}>
+    {children}
+  </photo_lab_context.Provider>;
 }
 
 const usePhotoLabContext = ()=> {

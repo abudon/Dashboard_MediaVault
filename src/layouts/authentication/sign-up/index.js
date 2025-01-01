@@ -139,13 +139,25 @@ function SignUp() {
         <SoftBox pt={2} pb={3} px={3}>
           <SoftBox component="form" role="form">
             <SoftBox mb={2}>
-              <SoftInput name={'username'} type="text"  placeholder="Username"  onChange={handleOnChange} />
+              <SoftInput icon={{
+                component: "person",
+                direction: "right"
+              }} name={'username'} type="text"  placeholder="Username"  onChange={handleOnChange} />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput name={'email'}  type="email" placeholder="Email" onChange={handleOnChange} />
+              <SoftInput icon={{
+                component: "email",
+                direction: "right"
+              }
+              } name={'email'}  type="email" placeholder="Email" onChange={handleOnChange} />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput name={'password'}  type="password" placeholder="Password"  onChange={handleOnChange}/>
+              <SoftInput
+                  icon={{
+                    component: "password",
+                    direction: "right"
+                  }}
+                  name={'password'}  type="password" placeholder="Password"  onChange={handleOnChange}/>
             </SoftBox>
             <SoftBox mb={2}>
               <Select

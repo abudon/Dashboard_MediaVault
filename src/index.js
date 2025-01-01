@@ -10,6 +10,7 @@ import '@fontsource/inter';
 import { PhotoLabContextProvider } from "context";
 import {LoginProvider} from "./context/loggingConxtext";
 import {SearchProvider} from "./context/useSearchQuery";
+import {DataProvider} from "./context/useData";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,7 +18,9 @@ root.render(
     <PhotoLabContextProvider >
         <LoginProvider>
             <SearchProvider>
-                <App />
+                <DataProvider>
+                    <App />
+                </DataProvider>
             </SearchProvider>
         </LoginProvider>
     </PhotoLabContextProvider >

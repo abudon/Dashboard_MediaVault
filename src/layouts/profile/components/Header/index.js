@@ -96,6 +96,7 @@ function Header() {
               variant="rounded"
               size="xl"
               shadow="sm"
+              bgColor={'transparent'}
             />
           </Grid>
           <Grid item>

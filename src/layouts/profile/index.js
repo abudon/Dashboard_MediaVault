@@ -19,10 +19,12 @@ import Footer from "examples/Footer";
 // Overview page components
 import Header from "layouts/profile/components/Header";
 import PlatformSettings from "layouts/profile/components/PlatformSettings";
-
+import { useData } from "../../context/useData";
 
 
 function Overview() {
+    const {company, links} = useData();
+
   return (
     <DashboardLayout>
       <Header />
@@ -150,7 +152,7 @@ function Overview() {
         {/*</Card>*/}
       </SoftBox>
 
-      <Footer />
+      <Footer company={company} links={links} />
     </DashboardLayout>
   );
 }

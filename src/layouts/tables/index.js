@@ -14,10 +14,12 @@ import Table from "examples/Tables/Table";
 
 // Data
 import UsersData from "./data/UsersTableData";
+import {useData} from "../../context/useData";
 
 
 function Tables() {
   const { columns, rows } = UsersData();
+  const {company, links} = useData()
 
 
   return (
@@ -45,7 +47,7 @@ function Tables() {
         </SoftBox>
 
       </SoftBox>
-      <Footer />
+      <Footer company={company} links={links} />
     </DashboardLayout>
   );
 }

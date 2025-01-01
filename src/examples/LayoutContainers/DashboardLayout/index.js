@@ -15,13 +15,13 @@ import SoftBox from "components/SoftBox";
 import { usePhotoLabContext, setLayout } from "context";
 
 function DashboardLayout({ children }) {
-  const [state, dispatch] = usePhotoLabContext();
+  const {state, dispatch} = usePhotoLabContext();
   const { miniSidenav } = state;
   const { pathname } = useLocation();
 
   useEffect(() => {
     setLayout(dispatch, "dashboard");
-  }, [pathname]);
+  }, [pathname, dispatch]);
 
   return (
     <SoftBox

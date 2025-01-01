@@ -5,7 +5,12 @@ const login_context = createContext(null)
 
 
 const LoginProvider = ({children}) =>{
-    const [username, setUsername] = useState(null);
+    const [username, setUsername] = useState(()=>{
+        // Check if the user is logged in from local storage
+        const savedUsername =JSON.parse(localStorage.getItem('admin')).username;
+
+        return savedUsername? savedUsername : null;
+    });
 
 
     return(

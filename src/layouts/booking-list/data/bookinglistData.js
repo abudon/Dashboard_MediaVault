@@ -78,7 +78,7 @@ const BookingListData = () => {
         }
         fetchBooking();
 
-    }, [searchQuery]);
+    }, [searchQuery, server_url]);
 
     const determineColor = (status) => {
         switch (status) {

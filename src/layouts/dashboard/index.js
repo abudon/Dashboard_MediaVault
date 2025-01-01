@@ -30,6 +30,8 @@ import {useLoginContext} from "../../context/loggingConxtext";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {useData} from "../../context/useData";
+import {usePhotoLabContext} from "../../context";
 
 ///////////// VARIABLES ///////////////////
 const { size } = typography;
@@ -49,7 +51,10 @@ function Dashboard() {
   const {username} = useLoginContext()
   const { chart, items } = reportsBarChartData;
   const server_url = process.env.REACT_APP_SERVER_API_URL;
-
+  const context = useData()
+  const {company, links} = context
+  const {state} = usePhotoLabContext()
+  const {sidenavColor} = state
 
 ///////////// FUNCTIONS ///////////////////
 
@@ -101,29 +106,35 @@ function Dashboard() {
 
             <Grid item xs={12} sm={6} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Booking List" }}
+                title={{ text: "Booking List", fontWeight: 12 }}
                 count={bookingNumber}
                 percentage={{ color: "success", text: "" }}
                 icon={{ color: "info", component: "book" }}
+                bgColor={sidenavColor}
+                direction="right"
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Total Users" }}
+                title={{ text: "Total Users", fontWeight: 12 }}
                 count={usersNumber}
                 percentage={{ color: "secondary", text: "" }}
                 icon={{ color: "info", component: "people" }}
+                bgColor={sidenavColor}
+                direction="right"
               />
             </Grid>
             <Grid item xs={12} sm={6} xl={4}>
               <MiniStatisticsCard
-                title={{ text: "Successful Payment" }}
+                title={{ text: "Successful Payment", fontWeight:12 }}
                 count={paidUsers}
                 percentage={{ color: "success", text: "" }}
                 icon={{
                   color: "info",
                   component: "payments",
                 }}
+                bgColor={sidenavColor}
+                direction="right"
               />
             </Grid>
           </Grid>
@@ -150,6 +161,7 @@ function Dashboard() {
                 }
                 chart={chart}
                 items={items}
+                color={sidenavColor}
               />
             </Grid>
             <Grid item xs={12} lg={7}>
@@ -174,16 +186,9 @@ function Dashboard() {
             </Grid>
           </Grid>
         </SoftBox>
-        <Grid container spacing={3}>
-          {/*<Grid item xs={12} md={6} lg={8}>*/}
-          {/*  <Projects />*/}
-          {/*</Grid>*/}
-          {/*<Grid item xs={12} md={6} lg={4}>*/}
-          {/*  <OrderOverview />*/}
-          {/*</Grid>*/}
-        </Grid>
+
       </SoftBox>
-      <Footer />
+      <Footer company={company} links={links} />
     </DashboardLayout>
   );
 }

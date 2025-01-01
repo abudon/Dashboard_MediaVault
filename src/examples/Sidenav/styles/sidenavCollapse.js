@@ -49,9 +49,8 @@ function collapseIconBox(theme, ownerState) {
   return {
     background: () => {
       if (active) {
-        return color === "default" ? info.main : palette[color].main;
+        return color && palette[color]?.main ? palette[color].main : info.main;
       }
-
       return light.main;
     },
     minWidth: pxToRem(32),
@@ -67,19 +66,12 @@ function collapseIconBox(theme, ownerState) {
 
     [breakpoints.up("xl")]: {
       background: () => {
-        let background;
-
         if (!active) {
-          background = transparentSidenav ? white.main : light.main;
-        } else if (color === "default") {
-          background = info.main;
-        } else if (color === "warning") {
-          background = gradients.warning.main;
-        } else {
-          background = palette[color].main;
+          return transparentSidenav ? white.main : light.main;
         }
-
-        return background;
+        return color && palette[color]?.main
+            ? palette[color].main
+            : info.main;
       },
     },
 

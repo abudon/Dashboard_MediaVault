@@ -28,7 +28,7 @@ import {NumberProvider} from "./context/useGallery";
 import EditUserPage from "./layouts/Editors";
 
 export default function App() {
-  const [state, dispatch] = usePhotoLabContext();
+  const {state, dispatch} = usePhotoLabContext();
   const { miniSidenav, layout, openConfigurator, sidenavColor } = state;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();

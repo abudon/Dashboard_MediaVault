@@ -12,6 +12,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Table from "examples/Tables/Table";
+import {useData} from "../../context/useData";
 
 // Data
 
@@ -20,7 +21,7 @@ import BookinglistData from "./data/bookinglistData";
 
 function BookingList() {
 const {columns, rows} = BookinglistData()
-
+const {company, links} = useData()
 
 
     return (
@@ -48,7 +49,7 @@ const {columns, rows} = BookinglistData()
                 </SoftBox>
 
             </SoftBox>
-            <Footer />
+            <Footer company={company} links={links} />
         </DashboardLayout>
     );
 }

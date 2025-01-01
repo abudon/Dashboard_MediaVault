@@ -104,7 +104,7 @@ function SignIn() {
       navigate("/dashboard")
     }
 
-  }, [username]);
+  }, [username, navigate, setUsername]);
 
 
 
@@ -128,7 +128,10 @@ function SignIn() {
               Email
             </SoftTypography>
           </SoftBox>
-          <SoftInput onChange={handleonChange} type="email" placeholder="Email" />
+          <SoftInput onChange={handleonChange} type="email" placeholder="Email" icon={{
+            component : "mail",
+            direction: 'right',
+          }} />
         </SoftBox>
         <SoftBox  mb={2}>
           <SoftBox mb={1} ml={0.5}>

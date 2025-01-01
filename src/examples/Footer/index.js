@@ -14,7 +14,7 @@ function Footer({ company, links }) {
   const { href, name } = company;
   const { size } = typography;
 
-    console.log(href,name)
+
 
   const renderLinks = () =>
     links.map((link) => (

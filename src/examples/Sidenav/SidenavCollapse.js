@@ -24,7 +24,7 @@ import {
 import { usePhotoLabContext} from "context";
 
 function SidenavCollapse({ color, icon, name, children, active, noCollapse, open, ...rest }) {
-  const [state] = usePhotoLabContext();
+  const {state} = usePhotoLabContext();
   const { miniSidenav, transparentSidenav } = state;
 
   return (

@@ -15,7 +15,7 @@ import { card, cardContent, cardIconBox, cardIcon } from "examples/Sidenav/style
 import { usePhotoLabContext } from "context";
 
 function SidenavCard() {
-  const [state] = usePhotoLabContext();
+  const {state} = usePhotoLabContext();
   const { miniSidenav, sidenavColor } = state;
 
   return (
