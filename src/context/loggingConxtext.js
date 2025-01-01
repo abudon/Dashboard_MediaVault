@@ -8,7 +8,7 @@ const LoginProvider = ({ children }) => {
         const savedAdmin = localStorage.getItem("admin");
         const savedUsername = savedAdmin ? JSON.parse(savedAdmin)?.username : null;
 
-        return savedUsername ? savedUsername : " ";
+        return savedUsername;
     });
 
     return (
